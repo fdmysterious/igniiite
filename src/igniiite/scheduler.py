@@ -37,7 +37,7 @@ async def run_at(then: datetime, what: Task):
 ##################################
 
 
-async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY, hour: int = 0, run_at_start: bool = False, in_same_month: bool = False):
+async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY, hour: int = 0, run_at_start: bool = False, in_same_month: bool = True):
     """
     Run a task monthly
 
@@ -101,7 +101,7 @@ async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY
     except asyncio.CancelledError:
         pass
 
-async def weekly(what: Task, day: calendar.Day, run_at_start: bool = False, in_same_week: bool = False):
+async def weekly(what: Task, day: calendar.Day, hour: int = 0, run_at_start: bool = False, in_same_week: bool = True):
     """
     Run task weekly.
     """
@@ -109,6 +109,9 @@ async def weekly(what: Task, day: calendar.Day, run_at_start: bool = False, in_s
     # Check arguments
     if not isinstance(day, calendar.Day):
         raise ValueError(f"type(day) = {type(day)} is not of type calendar.Day")
+
+    if (hour < 0) or (hour >= 24):
+        raise ValueError(f"hour = {hour} is not in range 0..23")
 
     try:
         # Run at start?
@@ -123,11 +126,12 @@ async def weekly(what: Task, day: calendar.Day, run_at_start: bool = False, in_s
             then       = now
             delta_days = day.value - then.weekday()
 
-            if (not in_same_week) or (delta_days < 0):
+            if (not in_same_week) or (delta_days < 0) or ((delta_days == 0) and (then.hour >= hour)):
                 then += timedelta(days=7)
 
+
             then += timedelta(days=delta_days)
-            then  = datetime(then.year, then.month, then.day, 0, 0, 0)
+            then  = datetime(then.year, then.month, then.day, hour, 0, 0)
 
             what.log.info(f"Weekly scheduling: scheduled to run task at {then}")
 
@@ -139,7 +143,7 @@ async def weekly(what: Task, day: calendar.Day, run_at_start: bool = False, in_s
         pass
 
 
-async def daily(what: Task, hour: int = 0, run_at_start: bool = False, in_same_day: bool = False):
+async def daily(what: Task, hour: int = 0, run_at_start: bool = False, in_same_day: bool = True):
     """
     Run a task daily.
 
@@ -180,7 +184,7 @@ async def daily(what: Task, hour: int = 0, run_at_start: bool = False, in_same_d
         pass
 
 
-async def hourly(what: Task, minutes: int = 0, run_at_start: bool = False, in_same_hour: bool = False):
+async def hourly(what: Task, minutes: int = 0, run_at_start: bool = False, in_same_hour: bool = True):
     # Check arguments
     if (minutes < 0) or (minutes >= 60):
         raise ValueError(f"minutes = {minutes} is out of 0..59 range")

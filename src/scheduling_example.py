@@ -34,11 +34,11 @@ async def main():
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(
-            scheduler.hourly(test_task, 17, in_same_hour=True, run_at_start=True)
+            scheduler.hourly(test_task, 17, run_at_start=True)
         )
 
         tg.create_task(
-            scheduler.weekly(test_task2, calendar.MONDAY, in_same_week=True)
+            scheduler.weekly(test_task2, calendar.SUNDAY, hour=17)
         )
 
 
