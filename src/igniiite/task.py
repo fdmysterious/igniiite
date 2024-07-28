@@ -168,6 +168,8 @@ class Task:
                except asyncio.TimeoutError:
                   self.log.error(f"Kill hook for task '{self.name}' failed to execute within 5s...")
 
+            asyncio.current_task().cancel()
+
 
          finally:
             task_ready_hook.cancel()
