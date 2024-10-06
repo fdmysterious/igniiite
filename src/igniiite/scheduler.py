@@ -66,14 +66,15 @@ async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY
             target_year   = now.year
             target_month  = now.month
 
-            start_weekday, last_monthday = calendar.monthrange(target_month)
+            start_weekday, last_monthday = calendar.monthrange(target_year, target_month)
 
             # Compute month day target
             days_offset = week*7 + (day.value - start_weekday) + 1
 
             # Target next week if target week day already gone for current week
             if days_offset <= 0:
-                days_offset += 7 
+                days_offset += 7
+
 
             # Check if target day is valid
             # -> Day is out of range for month
@@ -88,9 +89,11 @@ async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY
                     target_month = calendar.JANUARY.value
                     target_year += 1
 
-                start_weekday, last_monthday = calendar.monthrange(target_month)
+                start_weekday, last_monthday = calendar.monthrange(target_year, target_month)
                 days_offset = week*7 + (day.value - start_weekday) + 1
 
+                if days_offset <= 0:
+                    days_offset += 7
 
             then = datetime(target_year, target_month, days_offset, 0, 0, 0)
 
