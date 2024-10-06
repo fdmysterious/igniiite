@@ -1,0 +1,137 @@
+[build-system]
+requires        = ["hatchling"]
+build-backend   = "hatchling.build"
+
+
+##################################################
+# Generic project information
+##################################################
+
+[project]
+name            = "igniiite"
+dynamic         = ["version"]
+description     = 'minimalist init system framework written in async python'
+readme          = "README.md"
+requires-python = ">=3.8"
+license         = "MIT"
+keywords        = []
+
+authors = [
+  { name = "Florian Dupeyron", email = "florian.dupeyron@mugcat.fr" },
+]
+
+classifiers = [
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+dependencies = [
+	"pyyaml",
+	"furl",
+	"GitPython",
+	"colorama",
+	"coloredlogs",
+	"tabulate",
+]
+
+
+# TODO #
+[project.urls]
+#Documentation = "https://XXXX"
+Issues        = "https://github.com/fdmysterious/igniiite/issues"
+Source        = "https://github.com/fdmysterious/igniiite"
+
+[tool.hatch.version]
+path = "src/igniiite/__about__.py"
+
+
+##################################################
+# Tools configuration
+##################################################
+
+## ---------------------------- Coverage
+
+[tool.coverage.run]
+source_pkgs = ["igniiite", "tests"]
+branch      = true
+parallel    = true
+omit        = [
+	"src/igniiite/__about__.py"
+]
+
+[tool.coverage.paths]
+igniiite = ["src/igniiite", "*/igniiite/src/igniiite"]
+tests    = ["tests", "*/test-template/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+
+##################################################
+# Environments configuration
+##################################################
+
+## ---------------------------- Default environment
+
+[tool.hatch.envs.default]
+
+dependencies = [
+]
+
+
+## ---------------------------- Type-checking environment
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/igniiite tests}"
+
+
+## ---------------------------- Documentation generation environment
+
+[tool.hatch.envs.docs]
+dependencies = [
+	"mkdocs",
+	"mkdocs-material",
+	"mkdocs-roamlinks-plugin",
+	"mkdocstrings",
+	"mkdocstrings[python]",
+	"mkdocs-gen-files",
+	"mkdocs-literate-nav",
+	"erdantic"
+]
+
+[tool.hatch.envs.docs.scripts]
+build = "mkdocs build"
+
+
+## ---------------------------- Linting environment
+
+[tool.hatch.envs.lint]
+
+dependencies = [
+	"ruff",
+	"black",
+]
+
+
+[tool.hatch.envs.lint.scripts]
+
+code-rules       = "ruff check src"
+code-format      = "black src"
+
+# Linting report using SARIF format for automation
+code-rules-sarif = "ruff check src --output-format sarif -o .lint.sarif"

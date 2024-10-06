@@ -1,0 +1,54 @@
+site_name: "Igniiite!"
+copyright: "2024 - Florian Dupeyron"
+
+theme:
+  name: material
+  logo: assets/img/logo-igniiite.svg
+  palette:
+    primary: black
+    scheme: slate
+
+
+use_directory_urls: false
+
+plugins:
+  - search
+  - roamlinks
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          import:
+            - https://docs.python.org/3/objects.inv
+          options:
+            heading_level: 1
+            inherited_members: true
+            merge_init_into_class: true
+            parameter_headings: true
+            separate_signature: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_signature_annotations: true
+            show_symbol_type_heading: true
+            siganture_crossrefs: true
+            summary: true
+
+  - gen-files:
+      scripts:
+        - scripts/gen_ref_nav.py
+
+  - literate-nav:
+       nav_file: SUMMARY.md
+
+markdown_extensions:
+  - admonition
+  - footnotes
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.arithmatex:
+      generic: true
+
+# TODO # Add mathjax stuff?
