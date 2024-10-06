@@ -131,6 +131,7 @@ dependencies = [
 [tool.hatch.envs.lint.scripts]
 
 code-rules       = "ruff check src"
+code-rules-fix   = "ruff check --fix src"
 code-format      = "black src"
 
 # Linting report using SARIF format for automation

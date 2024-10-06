@@ -7,22 +7,19 @@ Scheduling utilities
 :Date: July 2024
 """
 
-import re
 import asyncio
-import logging
 import calendar
 
-from   enum    import IntEnum
 
-from   igniiite.task import Task
+from igniiite.task import Task
 
-from   functools     import partial
-from   datetime      import datetime, timedelta
+from datetime import datetime, timedelta
 
 # Inspired from https://stackoverflow.com/questions/51292027/how-to-schedule-a-task-in-asyncio-so-it-runs-at-a-certain-date
 
 
 ##################################
+
 
 async def wait_until(then: datetime):
     now = datetime.now()
@@ -37,7 +34,14 @@ async def run_at(then: datetime, what: Task):
 ##################################
 
 
-async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY, hour: int = 0, run_at_start: bool = False, in_same_month: bool = True):
+async def monthly(
+    what: Task,
+    week: int = 0,
+    day: calendar.Day = calendar.MONDAY,
+    hour: int = 0,
+    run_at_start: bool = False,
+    in_same_month: bool = True,
+):
     """
     Run a task monthly
 
@@ -54,7 +58,6 @@ async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY
     if not isinstance(day, calendar.Day):
         raise TypeError(f"type(day)={type(day)} is not of calendar.Day type")
 
-
     # Run once if needed
     try:
         if run_at_start:
@@ -62,25 +65,30 @@ async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY
             await what.run()
 
         while not asyncio.current_task().cancelled():
-            now           = datetime.now()
-            target_year   = now.year
-            target_month  = now.month
+            now = datetime.now()
+            target_year = now.year
+            target_month = now.month
 
-            start_weekday, last_monthday = calendar.monthrange(target_year, target_month)
+            start_weekday, last_monthday = calendar.monthrange(
+                target_year, target_month
+            )
 
             # Compute month day target
-            days_offset = week*7 + (day.value - start_weekday) + 1
+            days_offset = week * 7 + (day.value - start_weekday) + 1
 
             # Target next week if target week day already gone for current week
             if days_offset <= 0:
                 days_offset += 7
 
-
             # Check if target day is valid
             # -> Day is out of range for month
             # -> User requested for the next month
             # -> Day is already gone in month
-            if (days_offset >= last_monthday) or (not in_same_month) or (days_offset <= now.day):
+            if (
+                (days_offset >= last_monthday)
+                or (not in_same_month)
+                or (days_offset <= now.day)
+            ):
 
                 target_month += 1
 
@@ -89,8 +97,10 @@ async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY
                     target_month = calendar.JANUARY.value
                     target_year += 1
 
-                start_weekday, last_monthday = calendar.monthrange(target_year, target_month)
-                days_offset = week*7 + (day.value - start_weekday) + 1
+                start_weekday, last_monthday = calendar.monthrange(
+                    target_year, target_month
+                )
+                days_offset = week * 7 + (day.value - start_weekday) + 1
 
                 if days_offset <= 0:
                     days_offset += 7
@@ -104,7 +114,14 @@ async def monthly(what: Task, week: int = 0, day: calendar.Day = calendar.MONDAY
     except asyncio.CancelledError:
         pass
 
-async def weekly(what: Task, day: calendar.Day, hour: int = 0, run_at_start: bool = False, in_same_week: bool = True):
+
+async def weekly(
+    what: Task,
+    day: calendar.Day,
+    hour: int = 0,
+    run_at_start: bool = False,
+    in_same_week: bool = True,
+):
     """
     Run task weekly.
     """
@@ -126,27 +143,31 @@ async def weekly(what: Task, day: calendar.Day, hour: int = 0, run_at_start: boo
             now = datetime.now()
 
             # Compute next timestamp
-            then       = now
+            then = now
             delta_days = day.value - then.weekday()
 
-            if (not in_same_week) or (delta_days < 0) or ((delta_days == 0) and (then.hour >= hour)):
+            if (
+                (not in_same_week)
+                or (delta_days < 0)
+                or ((delta_days == 0) and (then.hour >= hour))
+            ):
                 then += timedelta(days=7)
 
-
             then += timedelta(days=delta_days)
-            then  = datetime(then.year, then.month, then.day, hour, 0, 0)
+            then = datetime(then.year, then.month, then.day, hour, 0, 0)
 
             what.log.info(f"Weekly scheduling: scheduled to run task at {then}")
 
             # Run the task
             await run_at(then, what)
 
-
     except asyncio.CancelledError:
         pass
 
 
-async def daily(what: Task, hour: int = 0, run_at_start: bool = False, in_same_day: bool = True):
+async def daily(
+    what: Task, hour: int = 0, run_at_start: bool = False, in_same_day: bool = True
+):
     """
     Run a task daily.
 
@@ -166,9 +187,8 @@ async def daily(what: Task, hour: int = 0, run_at_start: bool = False, in_same_d
             what.log.info("Daily scheduling: run at least the task once")
             await what.run()
 
-
         while not asyncio.current_task().cancelled():
-            now  = datetime.now()
+            now = datetime.now()
 
             # Compute next execution timestamp
             then = now
@@ -187,7 +207,9 @@ async def daily(what: Task, hour: int = 0, run_at_start: bool = False, in_same_d
         pass
 
 
-async def hourly(what: Task, minutes: int = 0, run_at_start: bool = False, in_same_hour: bool = True):
+async def hourly(
+    what: Task, minutes: int = 0, run_at_start: bool = False, in_same_hour: bool = True
+):
     # Check arguments
     if (minutes < 0) or (minutes >= 60):
         raise ValueError(f"minutes = {minutes} is out of 0..59 range")
@@ -197,7 +219,7 @@ async def hourly(what: Task, minutes: int = 0, run_at_start: bool = False, in_sa
         if run_at_start:
             what.log.info("Hourly scheduling: run at least the task once")
             await what.run()
-        
+
         while not asyncio.current_task().cancelled():
             now = datetime.now()
 
