@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="82.278671mm"
+   height="84.135918mm"
+   viewBox="0 0 82.278672 84.135917"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="logo-igniiite_inkscape.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showguides="false"
+     inkscape:zoom="2.1523008"
+     inkscape:cx="86.419148"
+     inkscape:cy="105.93315"
+     inkscape:window-width="2534"
+     inkscape:window-height="1414"
+     inkscape:window-x="12"
+     inkscape:window-y="12"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-47.772376,-86.559623)">
+    <path
+       id="rect4"
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       d="m 55.379391,90.559623 c -1.998438,0 -3.607015,1.608577 -3.607015,3.607015 v 58.667732 c 0,1.99844 1.608577,3.60754 3.607015,3.60754 h 4.789372 v 6.6461 c 0,1.99844 1.608578,3.60753 3.607015,3.60753 h 58.667732 c 1.99844,0 3.60754,-1.60909 3.60754,-3.60753 v -58.66773 c 0,-1.99844 -1.6091,-3.60702 -3.60754,-3.60702 h -4.78885 v -6.646622 c 0,-1.998438 -1.60909,-3.607015 -3.60753,-3.607015 z" />
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect2"
+       width="65.882385"
+       height="65.882385"
+       x="60.168545"
+       y="100.81312"
+       ry="3.6072917" />
+    <rect
+       style="fill:#eeffaa;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect1"
+       width="65.882385"
+       height="65.882385"
+       x="51.772209"
+       y="90.559456"
+       ry="3.6072917" />
+    <g
+       id="g4"
+       transform="translate(-1.3222018,6.2334147)">
+      <text
+         xml:space="preserve"
+         style="font-weight:500;font-size:24.3756px;font-family:'Darker Grotesque';-inkscape-font-specification:'Darker Grotesque Medium';fill:none;stroke:#000000;stroke-width:7.40317;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         x="57.81955"
+         y="109.36443"
+         id="text1"
+         transform="scale(0.98811672,1.0120262)"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24.3756px;font-family:Monospace;-inkscape-font-specification:'Monospace Bold';fill:#000000;stroke:none;stroke-width:7.40317"
+           x="57.81955"
+           y="109.36443"
+           id="tspan3">IGNI</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:500;font-size:22.3377px;font-family:'Darker Grotesque';-inkscape-font-specification:'Darker Grotesque Medium';fill:none;stroke:#000000;stroke-width:6.78424;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         x="63.026176"
+         y="122.81985"
+         id="text4"
+         transform="scale(0.90550658,1.1043542)"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:22.3377px;font-family:Monospace;-inkscape-font-specification:'Monospace Bold';fill:#000000;stroke:none;stroke-width:6.78424"
+           x="63.026176"
+           y="122.81985"
+           id="tspan4">IITE!</tspan></text>
+    </g>
+  </g>
+</svg>

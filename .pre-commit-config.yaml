@@ -1,0 +1,13 @@
+repos:
+  - repo: local
+    hooks:
+      - id: lint
+        language: system
+        name: "Run linter"
+        entry: hatch run lint:code-rules
+
+      - id: format
+        language: system
+        name: "Run black formatter"
+        entry: hatch run lint:code-format
+

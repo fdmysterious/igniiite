@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="82.279mm" height="84.136mm" version="1.1" viewBox="0 0 82.279 84.136" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(-47.772 -86.56)" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m55.379 90.56c-1.9984 0-3.607 1.6086-3.607 3.607v58.668c0 1.9984 1.6086 3.6075 3.607 3.6075h4.7894v6.6461c0 1.9984 1.6086 3.6075 3.607 3.6075h58.668c1.9984 0 3.6075-1.6091 3.6075-3.6075v-58.668c0-1.9984-1.6091-3.607-3.6075-3.607h-4.7888v-6.6466c0-1.9984-1.6091-3.607-3.6075-3.607z" fill="#fff" stroke="#fff" stroke-width="8"/>
+  <rect x="60.169" y="100.81" width="65.882" height="65.882" ry="3.6073" stroke="#000" stroke-width="3"/>
+  <rect x="51.772" y="90.559" width="65.882" height="65.882" ry="3.6073" fill="#efa" stroke="#000" stroke-width="3"/>
+  <g transform="translate(-1.3222 6.2334)" fill="none" font-family="'Darker Grotesque'" font-weight="500" stroke="#000000">
+   <text transform="scale(.98812 1.012)" x="57.81955" y="109.36443" font-size="24.376px" stroke-width="7.4032" xml:space="preserve"><tspan x="57.81955" y="109.36443" fill="#000000" font-family="Monospace" font-size="24.376px" font-weight="bold" stroke="none" stroke-width="7.4032">IGNI</tspan></text>
+   <text transform="scale(.90551 1.1044)" x="63.026176" y="122.81985" font-size="22.338px" stroke-width="6.7842" xml:space="preserve"><tspan x="63.026176" y="122.81985" fill="#000000" font-family="Monospace" font-size="22.338px" font-weight="bold" stroke="none" stroke-width="6.7842">IITE!</tspan></text>
+  </g>
+ </g>
+</svg>
