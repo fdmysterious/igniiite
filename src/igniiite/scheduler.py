@@ -1,10 +1,9 @@
 """
-====================
 Scheduling utilities
 ====================
 
-:Authors: - Florian Dupeyron <florian.dupeyron@mugcat.fr>
-:Date: July 2024
+- Florian Dupeyron &lt;florian.dupeyron@mugcat.fr&gt;
+- July 2024
 """
 
 import asyncio
@@ -22,11 +21,26 @@ from datetime import datetime, timedelta
 
 
 async def wait_until(then: datetime):
+    """Wait until a specified timestamp before running
+    
+    Args:
+        then: target timestamp
+    """
+
     now = datetime.now()
     await asyncio.sleep((then - now).total_seconds())
 
 
 async def run_at(then: datetime, what: Task):
+    """Run a specific task at a specified timestamp
+
+    This utility allows to run a task multiple times
+
+    Args:
+        then: target timestamp
+        what: the task to run
+    """
+
     await wait_until(then)
     return await what.run()
 
@@ -42,13 +56,14 @@ async def monthly(
     run_at_start: bool = False,
     in_same_month: bool = True,
 ):
-    """
-    Run a task monthly
+    """Run a task monthly
 
-    :param week: target week number, 0..3
-    :param day: target week day, see Weekday enum
-    :param run_at_start: run once when starting the scheduler
-    :param in_same_month: next scheduling can be in same month
+    Args:
+        what: The task to run
+        week: Target week number, 0..3
+        day: Target week day, see Weekday enum
+        run_at_start: Run once when starting the scheduler
+        in_same_month: Next scheduling can be in same month
     """
 
     # Check arguments
@@ -122,8 +137,10 @@ async def weekly(
     run_at_start: bool = False,
     in_same_week: bool = True,
 ):
-    """
-    Run task weekly.
+    """Run task weekly.
+
+    Args:
+        what: The task to run
     """
 
     # Check arguments
@@ -166,15 +183,21 @@ async def weekly(
 
 
 async def daily(
-    what: Task, hour: int = 0, run_at_start: bool = False, in_same_day: bool = True
+    what: Task,
+    hour: int = 0,
+    run_at_start: bool = False,
+    in_same_day: bool = True
 ):
-    """
-    Run a task daily.
+    """Run a task daily.
 
     Note: by default when launching the scheduler the next timestamp is at least in the next 24h.
     Use the in_same_day parameter to run in the same day if needed.
 
-    :param hour: Hour to run, defaults to 0, should range from 0-23 (24h format)
+    Args:
+        what: The task to run
+        hour: Hour to run, defaults to 0, should range from 0-23 (24h format)
+        run_at_start: Run the task one time when starting?
+        in_same_day: Allow next schedule to be in same day when starting
     """
 
     # Check arguments
@@ -208,8 +231,20 @@ async def daily(
 
 
 async def hourly(
-    what: Task, minutes: int = 0, run_at_start: bool = False, in_same_hour: bool = True
+    what: Task,
+    minutes: int = 0,
+    run_at_start: bool = False,
+    in_same_hour: bool = True
 ):
+    """Run a task hourly
+
+    Args:
+        what: the task to run
+        minutes: At which number of minutes each hour the task should be scheduled?
+        run_at_start: Run one time before next waiting for next schedule? 
+        in_same_hour: Allow next schedule to be in same hour when starting
+    """
+
     # Check arguments
     if (minutes < 0) or (minutes >= 60):
         raise ValueError(f"minutes = {minutes} is out of 0..59 range")
