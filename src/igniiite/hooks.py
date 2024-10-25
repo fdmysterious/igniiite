@@ -1,10 +1,9 @@
 """
-====================================
 Hooks factory for various behaviours
 ====================================
 
-:Authors: - Florian Dupeyron <florian.dupeyron@mugcat.fr>
-:Date: April 2024
+- Florian Dupeyron &lt;florian.dupeyron@mugcat.fr&gt;
+- April 2024
 """
 
 import re
@@ -16,6 +15,12 @@ from functools import partial
 
 
 def wait_for_str_re(regex):
+    """Wait for a output line matching a pattern to indicate task is ready
+
+    Args:
+        regex: the regex to match on
+    """
+
     # Ensure regex is a compiled regex
     if not isinstance(regex, re.Pattern):
         regex = re.compile(regex)
@@ -41,6 +46,12 @@ def wait_for_str_re(regex):
 
 
 def wait_for_seconds(nseconds):
+    """Wait for a number of seconds before indicating task is ready
+
+    Args:
+        nseconds number of seconds to wait for
+    """
+
     async def wait_for_seconds_impl(task, seconds):
         task.log.info(f"Wait for {seconds}s before considering '{task.name}' ready")
         await asyncio.sleep(seconds)

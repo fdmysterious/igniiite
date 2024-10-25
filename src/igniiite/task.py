@@ -1,10 +1,9 @@
 """
-===========================================
 Task definition for igniiite init framework
 ===========================================
 
-:Authors: - Florian Dupeyron <florian.dupeyron@mugcat.fr>
-:Date: April 2024
+- Florian Dupeyron &lt;florian.dupeyron@mugcat.fr&gt;
+- April 2024
 """
 
 import asyncio
@@ -20,38 +19,76 @@ from typing import Set
 
 
 async def null_hook(self):
+    """Dummy default hook, task is never ready
+    """
+
     pass
 
 
 async def default_ready_hook(self):
+    """Default ready hook, set task ready immediately
+    """
+
     self.set_ready()
 
 
 class TaskListeners:
+    """"Utility class to allow listen on standard outputs (stdout and stderr) for a task
+
+    This allow to setup listen hooks for task status monitoring.
+    """
+
     def __init__(self):
         self.listeners = set()
         self.semaphore = asyncio.Semaphore()
 
     async def register(self, listener):
+        """Register a listener
+
+        Args:
+            listener: the listener to add in current task monitoring
+        """
+
         async with self.semaphore:
             self.listeners.add(listener)
 
     async def unregister(self, listener):
+        """Remove a listener
+
+        Args:
+            listener: the listener to remove
+        """
+
         async with self.semaphore:
             self.listeners.discard(listener)
 
 
 @dataclass
 class Task:
+    """Core class of igniiite. represents a task
+    """
+
+    """The name of the task"""
     name: str
+    
+    """The command to launch"""
     command: str
 
+    """Dependencies of this task (must be ready before task launches)"""
     dependencies: Set["Task"] = field(default_factory=set)
 
+    """Pre launch hook. Called before waiting for dependencies"""
     pre_hook: Coroutine = null_hook
+
+    """Post task hook. Called after task process is gone, and before setting ended status"""
     post_hook: Coroutine = null_hook
+
+    """Kill hook. Called when killing process if gracefully exit timed out"""
     kill_hook: Coroutine = null_hook
+
+    """Ready monitoring hook. Indicates task readyness status"""
     ready_hook: Coroutine = default_ready_hook
+
 
     def __post_init__(self):
         self.process = None
@@ -100,10 +137,17 @@ class Task:
             pass  # Ignore process if already finished.
 
     def set_ready(self):
+        """Utility function to indicate task is ready
+
+        Is primarly called by hooks that monitor the task
+        """
         self.log.info(f"Process '{self.name}' is ready!")
         self.ready.set()
 
     async def run(self):
+        """Run the task
+        """
+
         self.log.info(f"Start process '{self.name}'")
         self.log.debug(f"Command: '{self.command}'")
         self.ended.clear()
